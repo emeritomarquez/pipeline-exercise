@@ -41,8 +41,8 @@ jobs:
     steps:
       - print_pipeline_id:
           id: << pipeline.id >>
-      - run: echo HELLO
-      - run: echo WORLD
+#      - run: echo HELLO
+#      - run: echo WORLD
       - run: echo $_env_name
 
   # Exercise: Sharing Files (Job names may have changed)
