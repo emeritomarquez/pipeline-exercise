@@ -239,7 +239,7 @@ workflows:
       # - welcome/run
       - print_greetings
       - create_infrastructure
-      - upload_file
+      - upload_file:
           requires:
             - create_infrastructure
       - download_file:
