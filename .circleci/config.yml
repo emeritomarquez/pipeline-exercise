@@ -65,7 +65,7 @@ jobs:
   # Exercise: Sharing Files (Job names may have changed)
   upload_file:
     docker:
-      - image: amazon/aws-cli 
+      - image: aws-cli/default 
     steps:
       - checkout
       - run: 
