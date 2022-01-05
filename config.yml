@@ -65,7 +65,7 @@ jobs:
   # Exercise: Sharing Files (Job names may have changed)
   upload_file:
     docker:
-      - image: aws-cli/default 
+      - image: amazon/aws-cli 
     steps:
       - checkout
       - run: 
@@ -73,7 +73,7 @@ jobs:
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > inventory.txt
       - persist_to_workspace:
-          root: ~/
+          root: ~/pipeline-exercise/
           paths:
             - inventory.txt
 
@@ -82,8 +82,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
-          at: ~/
-      - run: cat ~/inventory.txt
+          at: ~/pipeline-exercise/
+      - run: cat ~/pipeline-exercise/inventory.txt
 
 #   Exercise: Config and Deployment
 #  configure_infrastructure:
