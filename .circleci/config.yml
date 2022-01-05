@@ -65,7 +65,7 @@ jobs:
   # Exercise: Sharing Files (Job names may have changed)
   upload_file:
     docker:
-      - image: circleci/node:13.8.0
+      - image: amazon/aws-cli 
     steps:
       - checkout
       - run: 
