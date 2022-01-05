@@ -240,6 +240,8 @@ workflows:
       - print_greetings
       - create_infrastructure
       - upload_file
+          requires:
+            - create_infrastructure
       - download_file:
           requires:
             - upload_file
