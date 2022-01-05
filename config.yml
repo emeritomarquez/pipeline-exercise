@@ -77,7 +77,7 @@ jobs:
           command: |
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > inventory.txt
       - persist_to_workspace:
-          root: ~/pipeline-exercise/
+          at: ~/pipeline-exercise/
           paths:
             - inventory.txt
 
