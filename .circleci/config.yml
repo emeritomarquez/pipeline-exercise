@@ -45,25 +45,6 @@ jobs:
 #      - run: echo WORLD
       - run: echo $_env_name
 
-  # Exercise: Sharing Files (Job names may have changed)
-  upload_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo "THIS IS A SAMPLE TEXT" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-
-  download_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt
-
   # Exercise: Infrastructure Creation
   # Exercise - Rollback
   create_infrastructure:
@@ -83,20 +64,40 @@ jobs:
       # - run: return 1
 #      - destroy_environment
 
+  # Exercise: Sharing Files (Job names may have changed)
+  upload_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: 
+          name: Create Cloudformation Stack
+          command: 
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - inventory.txt
 
-  # Exercise: Config and Deployment
-#  configure_infrastructure:
+  download_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/inventory.txt
+
+#   Exercise: Config and Deployment
 #  configure_infrastructure:
 #    docker:
 #      - image: python:3.7-alpine3.11
 #    steps:
 #      - checkout
 #      - add_ssh_keys:
-#          fingerprints: ["0c:55:f7:d7:ad:e3:73:19:0b:e6:c6:46:5c:04:76:94"] # You can get this ID in the section where you registered the SSH Key
+#          fingerprints: ["c4:f6:ed:a4:f7:7c:58:ec:82:33:9f:04:cc:bd:30:a1"] # You can get this ID in the section where you registered the SSH Key
 #      - run:
 #          name: Install dependencies
 #          command: |
-            # install the dependencies needed for your playbook
+# install the dependencies needed for your playbook
 #            apk add --update ansible
 #            apk add --update ansible
 #      - run:
@@ -244,7 +245,7 @@ workflows:
           requires:
             - upload_file
       - create_infrastructure
-#     - configure_infrastructure
+     - configure_infrastructure
 #      - create_and_deploy_front_end
 #      - promote_to_production:
 #          requires:
