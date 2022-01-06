@@ -38,8 +38,8 @@ jobs:
     steps:
       - print_pipeline_id:
           id: << pipeline.id >>
-#      - run: echo HELLO
-#      - run: echo WORLD
+      - run: echo HELLO
+      - run: echo WORLD
       - run: echo $_env_name
 
   # Exercise: Infrastructure Creation
@@ -74,7 +74,7 @@ jobs:
       - run: 
           name: Create Cloudformation Stack
           command: |
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text > ~/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text | tail -1 > ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
